@@ -10,7 +10,7 @@ namespace csharp_gestore_eventi
 {
     internal class Evento
     {
-        // PROPRIETA'
+        // PROPRIETA'===================================================================================================================================
         // 1)-------------------------------------------------------------------------------------------------------------------------------------------
         private string _titolo;
         public string Titolo 
@@ -43,20 +43,16 @@ namespace csharp_gestore_eventi
                 {
                 throw new Exception("La data inserita è ERRATA, non può essere nel futuro");
             }
-            this.Data = value;
+            this._data = value;
             }
         }
+       
         // 3)---------------------------------------------------------------------------------------------------------------------------------------------
         public int CapienzaMassima { get; }
         // 4)---------------------------------------------------------------------------------------------------------------------------------------------
         public int PostiPrenotati { get; private set; }
 
-
-        // SETTERS
-      
-        public void SetData(DateTime data)
-        {
-        }
+        // SETTERS========================================================================================================================================
         public void SetCapienza(int capienzaMassima)
         {
             if (capienzaMassima <= 0)
@@ -65,7 +61,7 @@ namespace csharp_gestore_eventi
             }
         }
 
-        // COSTRUTTORE
+        // COSTRUTTORE===================================================================================================================================
         public Evento(string titolo, DateTime data, int capienzaMassima)
         {
             this.Titolo = titolo;
@@ -73,15 +69,16 @@ namespace csharp_gestore_eventi
             this.CapienzaMassima = capienzaMassima;
         }
 
-        // METODI 
+        // METODI=======================================================================================================================================
+        // 1)-------------------------------------------------------------------------------------------------------------------------------------------
         public void PrenotaPosti(int capienzaMassima, int postiPrenotati)
         {
             
-            if (capienzaMassima > postiPrenotati )
+            if (capienzaMassima > (PostiPrenotati + postiPrenotati))
             {
-                this.PostiPrenotati = postiPrenotati;
+                this.PostiPrenotati += postiPrenotati;
                 Console.WriteLine($"Congratulazioni, ha prenotato con successo {postiPrenotati} posti");
-                Console.WriteLine($"Ora i posti disponibili sono {(capienzaMassima - postiPrenotati)}");
+                Console.WriteLine($"Ora i posti disponibili sono {(capienzaMassima - this.PostiPrenotati)}");
                 
             }
             if (postiPrenotati > capienzaMassima)
@@ -90,21 +87,29 @@ namespace csharp_gestore_eventi
             }
             
         }
-        public void DisdiciPosti(int capienzaMassima, int postiPrenotati, int postiDisdetti, string titolo, DateTime data)
-        {   
-            if (postiPrenotati < postiDisdetti)
+        // 2)-----------------------------------------------------------------------------------------------------------------------------------------
+        public void DisdiciPosti( int postiDisdetti)
+        {
+            if (postiDisdetti < 0)
             {
-                throw new Exception($"NON PUOI disdire più prenotazioni ({postiDisdetti}) di quelle che hai fatto ({postiPrenotati})");
+                throw new Exception("Il numero di posti disdetti non può essere negativo");
             }
-            if (postiPrenotati == postiDisdetti)
+            else if (PostiPrenotati < postiDisdetti)
+            {
+                throw new Exception($"NON PUOI disdire più prenotazioni ({postiDisdetti}) di quelle che hai fatto ({PostiPrenotati})");
+            }
+            else if (PostiPrenotati == postiDisdetti)
             {
                 Console.WriteLine("Hai cancellato tutte le tue prenotazioni");
             }
-            if (postiPrenotati > postiDisdetti)
-            {
-                Console.WriteLine($"Bene, hai prenotato {postiPrenotati - postiDisdetti}, sono rimasti disponibili {capienzaMassima - postiPrenotati} per l'evento {titolo} del {data}");
+            else
+            {   
+                PostiPrenotati -= postiDisdetti;
+                Console.WriteLine($"Bene, sono rimasti prenotati {PostiPrenotati}");
+                Console.WriteLine($"Ora i posti disponibili sono {(CapienzaMassima - PostiPrenotati)}");
             }
         }
+    }
         
     }
 
