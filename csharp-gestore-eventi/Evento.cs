@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Text;
@@ -38,21 +39,23 @@ namespace csharp_gestore_eventi
         {
             if (string.IsNullOrWhiteSpace(titolo)) 
             {
-                throw new ArgumentException();
+                throw new Exception("Deve esserci un titolo");
             }
+            this.Titolo = titolo;
         }
         public void SetData(DateTime data)
         {
             if (data > DateTime.Now)
             {
-                throw new ArgumentException("La data inserita è ERRATA, non può essere nel futuro");
+                throw new Exception("La data inserita è ERRATA, non può essere nel futuro");
             }
+            this.Data = data;
         }
         public void SetCapienza(int capienzaMassima)
         {
             if (capienzaMassima <= 0)
             {
-                throw new ArgumentException("La capienza massima deve essere un numero intero positivo");
+                throw new Exception("La capienza massima deve essere un numero intero positivo");
             }
         }
 
@@ -66,15 +69,21 @@ namespace csharp_gestore_eventi
         }
 
         // METODI 
-        public void PrenotaPosti(int capienzaMassima, int postiPrenotati, int prenotazione)
+        public void PrenotaPosti(int capienzaMassima, int postiPrenotati)
         {   
-            if ((capienzaMassima - postiPrenotati) > prenotazione )
+            if (capienzaMassima > postiPrenotati )
             {
-                Console.WriteLine($"Congratulazioni, ha prenotato con successo {prenotazione} posti");
-                Console.WriteLine($"I posti totali prenotati ora sono {(postiPrenotati + prenotazione)}");
+                Console.WriteLine($"Congratulazioni, ha prenotato con successo {postiPrenotati} posti");
+                Console.WriteLine($"Ora i posti disponibili sono {(capienzaMassima - postiPrenotati)}")
+                
             }
-            else { throw new Exception($"Mi spiace, hai prenotato troppi posti, quelli disponibili sono solo {(capienzaMassima - postiPrenotati)}"); }
+            else { throw new Exception($"Mi spiace, hai prenotato troppi posti, la capienza massima è di {capienzaMassima} posti"); }
         }
+        public void DisdiciPosti(int postiPrenotati)
+        {
+
+        }
+        
     }
 
 }
