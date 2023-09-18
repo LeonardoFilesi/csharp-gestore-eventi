@@ -28,20 +28,40 @@ namespace csharp_gestore_eventi
         {
             return this.Titolo;
         }
-
-        public DateTime MostraData(DateTime data)
+        public DateTime MostraData()
         {
             return this.Data;
         }
-
-        public int MostraCapienza(int capienzaMassima)
+        public int MostraCapienza()
         {
             return this.CapienzaMassima;
         }
-
-        public int MostraPosti(int postiPrenotati)
+        public int MostraPosti()
         {
             return this.PostiPrenotati;
+        }
+
+        //SETTER
+        public void SetTitolo(string titolo)
+        {
+            if (string.IsNullOrWhiteSpace(titolo)) 
+            {
+                throw new ArgumentException();
+            }
+        }
+        public void SetData(DateTime data)
+        {
+            if (data > DateTime.Now)
+            {
+                throw new ArgumentException("La data inserita è ERRATA, non può essere nel futuro");
+            }
+        }
+        public void SetCapienza(int capienzaMassima)
+        {
+            if (capienzaMassima <= 0)
+            {
+                throw new ArgumentException("La capienza massima deve essere un numero intero positivo");
+            }
         }
     }
 
