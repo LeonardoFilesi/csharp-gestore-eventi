@@ -14,16 +14,8 @@ namespace csharp_gestore_eventi
         public DateTime Data { get; set; }
         public int CapienzaMassima { get; }
         public int PostiPrenotati { get; }
-        // COSTRUTTORE
-        public Evento(string titolo, DateTime data, int capienzaMassima, int postiPrenotati)
-        {
-            this.Titolo = titolo;
-            this.Data = data;
-            this.CapienzaMassima = capienzaMassima;
-            this.PostiPrenotati = postiPrenotati;
-        }
 
-        //GETTER 
+        //GETTERS
         public string MostraTitolo()
         {
             return this.Titolo;
@@ -41,7 +33,7 @@ namespace csharp_gestore_eventi
             return this.PostiPrenotati;
         }
 
-        //SETTER
+        //SETTERS
         public void SetTitolo(string titolo)
         {
             if (string.IsNullOrWhiteSpace(titolo)) 
@@ -62,6 +54,26 @@ namespace csharp_gestore_eventi
             {
                 throw new ArgumentException("La capienza massima deve essere un numero intero positivo");
             }
+        }
+
+        // COSTRUTTORE
+        public Evento(string titolo, DateTime data, int capienzaMassima, int postiPrenotati)
+        {
+            this.Titolo = titolo;
+            this.Data = data;
+            this.CapienzaMassima = capienzaMassima;
+            this.PostiPrenotati = postiPrenotati;
+        }
+
+        // METODI 
+        public void PrenotaPosti(int capienzaMassima, int postiPrenotati, int prenotazione)
+        {   
+            if ((capienzaMassima - postiPrenotati) > prenotazione )
+            {
+                Console.WriteLine($"Congratulazioni, ha prenotato con successo {prenotazione} posti");
+                Console.WriteLine($"I posti totali prenotati ora sono {(postiPrenotati + prenotazione)}");
+            }
+            else { throw new Exception($"Mi spiace, hai prenotato troppi posti, quelli disponibili sono solo {(capienzaMassima - postiPrenotati)}"); }
         }
     }
 
