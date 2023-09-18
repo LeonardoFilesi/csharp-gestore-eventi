@@ -4,6 +4,7 @@
     {
         static void Main(string[] args)
         {
+            Evento eventoEsempio1 = new Evento;
             Console.WriteLine("Benvenuto alla pagina di gestione Eventi di Experis!");
             Console.WriteLine("Crea un EVENTO:");
             Console.WriteLine("Titolo:");
@@ -12,9 +13,36 @@
             DateTime data = DateTime.Parse(Console.ReadLine());
             Console.WriteLine("Capienza massima:");
             int capienzaMassima = int.Parse(Console.ReadLine());
-            Console.WriteLine("Vuoi proseguire prenotando dei posti riservati per il tuo staff e parenti? rispondi Y/N ");
-            string risposta = Console.ReadLine();
-            if 
+            Console.WriteLine("Vuoi proseguire prenotando dei posti riservati per il tuo staff e parenti? Rispondi y/n :");
+            string risposta1 = Console.ReadLine();
+            if (risposta1 == "y")
+            {
+                Console.WriteLine("Numero dei posti riservati da prenotare?");
+                int postiPrenotati = int.Parse(Console.ReadLine());
+                eventoEsempio1.PrenotaPosti(capienzaMassima, postiPrenotati);
+            }
+            if (risposta1 == "n")
+            {
+                Console.WriteLine("Ok, questo è un riepilogo dell'evento:");
+                Console.WriteLine($"Titolo: {titolo}");
+                Console.WriteLine($"La capienza massima è: {capienzaMassima} posti");
+                Console.WriteLine($"La programmazione prevista è per il: {capienzaMassima}");
+            }
+            Console.WriteLine("Vuoi proseguire disdendo delle prenotazioni? Rispondi y/n :");
+            string risposta2 = Console.ReadLine();
+            if (risposta2 == "y")
+            {
+                Console.WriteLine("Numero di prenotazioni da disdire?");
+                int postiDisdetti = int.Parse(Console.ReadLine());
+                eventoEsempio1.PrenotaPosti(capienzaMassima, postiDisdetti);
+            }
+            if (risposta2 == "n")
+            {
+                Console.WriteLine("Ok, questo è un riepilogo dell'evento:");
+                Console.WriteLine($"Titolo: {titolo}");
+                Console.WriteLine($"La capienza massima è: {capienzaMassima} posti");
+                Console.WriteLine($"La programmazione prevista è per il: {capienzaMassima}");
+            }
         }
     }
 }

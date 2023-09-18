@@ -70,14 +70,19 @@ namespace csharp_gestore_eventi
 
         // METODI 
         public void PrenotaPosti(int capienzaMassima, int postiPrenotati)
-        {   
+        {
+            
             if (capienzaMassima > postiPrenotati )
             {
                 Console.WriteLine($"Congratulazioni, ha prenotato con successo {postiPrenotati} posti");
-                Console.WriteLine($"Ora i posti disponibili sono {(capienzaMassima - postiPrenotati)}")
+                Console.WriteLine($"Ora i posti disponibili sono {(capienzaMassima - postiPrenotati)}");
                 
             }
-            else { throw new Exception($"Mi spiace, hai prenotato troppi posti, la capienza massima è di {capienzaMassima} posti"); }
+            if (postiPrenotati > capienzaMassima)
+            { 
+                throw new Exception($"Mi spiace, hai prenotato troppi posti, la capienza massima è di {capienzaMassima} posti"); 
+            }
+            
         }
         public void DisdiciPosti(int postiPrenotati)
         {
