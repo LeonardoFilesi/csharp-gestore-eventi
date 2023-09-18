@@ -4,7 +4,6 @@
     {
         static void Main(string[] args)
         {
-            Evento eventoEsempio1 = new Evento;
             Console.WriteLine("Benvenuto alla pagina di gestione Eventi di Experis!");
             Console.WriteLine("Crea un EVENTO:");
             Console.WriteLine("Titolo:");
@@ -15,6 +14,7 @@
             int capienzaMassima = int.Parse(Console.ReadLine());
             Console.WriteLine("Vuoi proseguire prenotando dei posti riservati per il tuo staff e parenti? Rispondi y/n :");
             string risposta1 = Console.ReadLine();
+            Evento eventoEsempio1 = new Evento(titolo,  data, capienzaMassima);
             if (risposta1 == "y")
             {
                 Console.WriteLine("Numero dei posti riservati da prenotare?");
@@ -28,7 +28,7 @@
                 Console.WriteLine($"La capienza massima è: {capienzaMassima} posti");
                 Console.WriteLine($"La programmazione prevista è per il: {capienzaMassima}");
             }
-            Console.WriteLine("Vuoi proseguire disdendo delle prenotazioni? Rispondi y/n :");
+            Console.WriteLine("Vuoi proseguire disdicendo delle prenotazioni? Rispondi y/n :");
             string risposta2 = Console.ReadLine();
             if (risposta2 == "y")
             {

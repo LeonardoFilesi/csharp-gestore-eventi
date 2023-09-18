@@ -11,45 +11,51 @@ namespace csharp_gestore_eventi
     internal class Evento
     {
         // PROPRIETA'
-        public string Titolo { get; set; }
-        public DateTime Data { get; set; }
-        public int CapienzaMassima { get; }
-        public int PostiPrenotati { get; }
-
-        //GETTERS
-        public string MostraTitolo()
+        // 1)-------------------------------------------------------------------------------------------------------------------------------------------
+        private string _titolo;
+        public string Titolo 
         {
-            return this.Titolo;
-        }
-        public DateTime MostraData()
-        {
-            return this.Data;
-        }
-        public int MostraCapienza()
-        {
-            return this.CapienzaMassima;
-        }
-        public int MostraPosti()
-        {
-            return this.PostiPrenotati;
-        }
-
-        //SETTERS
-        public void SetTitolo(string titolo)
-        {
-            if (string.IsNullOrWhiteSpace(titolo)) 
+            get
             {
-                throw new Exception("Deve esserci un titolo");
+                return this._titolo;
             }
-            this.Titolo = titolo;
-        }
-        public void SetData(DateTime data)
-        {
-            if (data > DateTime.Now)
+            set
             {
+                if (string.IsNullOrWhiteSpace(value))   // Value: valore scritto dall'utente
+                {
+                    throw new Exception("Deve esserci un titolo");
+                }
+                this._titolo = value;
+            }
+        }
+        // 2)-------------------------------------------------------------------------------------------------------------------------------------------
+        private DateTime _data;
+        public DateTime Data 
+        { 
+            get
+            {
+                return this._data;
+            }
+            set
+            {
+
+            if (value > DateTime.Now)                  // Value: valore scritto dall'utente
+                {
                 throw new Exception("La data inserita è ERRATA, non può essere nel futuro");
             }
-            this.Data = data;
+            this.Data = value;
+            }
+        }
+        // 3)---------------------------------------------------------------------------------------------------------------------------------------------
+        public int CapienzaMassima { get; }
+        // 4)---------------------------------------------------------------------------------------------------------------------------------------------
+        public int PostiPrenotati { get; private set; }
+
+
+        // SETTERS
+      
+        public void SetData(DateTime data)
+        {
         }
         public void SetCapienza(int capienzaMassima)
         {
@@ -60,12 +66,11 @@ namespace csharp_gestore_eventi
         }
 
         // COSTRUTTORE
-        public Evento(string titolo, DateTime data, int capienzaMassima, int postiPrenotati)
+        public Evento(string titolo, DateTime data, int capienzaMassima)
         {
             this.Titolo = titolo;
             this.Data = data;
             this.CapienzaMassima = capienzaMassima;
-            this.PostiPrenotati = postiPrenotati;
         }
 
         // METODI 
@@ -74,6 +79,7 @@ namespace csharp_gestore_eventi
             
             if (capienzaMassima > postiPrenotati )
             {
+                this.PostiPrenotati = postiPrenotati;
                 Console.WriteLine($"Congratulazioni, ha prenotato con successo {postiPrenotati} posti");
                 Console.WriteLine($"Ora i posti disponibili sono {(capienzaMassima - postiPrenotati)}");
                 
@@ -84,9 +90,20 @@ namespace csharp_gestore_eventi
             }
             
         }
-        public void DisdiciPosti(int postiPrenotati)
-        {
-
+        public void DisdiciPosti(int capienzaMassima, int postiPrenotati, int postiDisdetti, string titolo, DateTime data)
+        {   
+            if (postiPrenotati < postiDisdetti)
+            {
+                throw new Exception($"NON PUOI disdire più prenotazioni ({postiDisdetti}) di quelle che hai fatto ({postiPrenotati})");
+            }
+            if (postiPrenotati == postiDisdetti)
+            {
+                Console.WriteLine("Hai cancellato tutte le tue prenotazioni");
+            }
+            if (postiPrenotati > postiDisdetti)
+            {
+                Console.WriteLine($"Bene, hai prenotato {postiPrenotati - postiDisdetti}, sono rimasti disponibili {capienzaMassima - postiPrenotati} per l'evento {titolo} del {data}");
+            }
         }
         
     }
