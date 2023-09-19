@@ -52,8 +52,8 @@ namespace csharp_gestore_eventi
             } catch(Exception ex) 
             { 
                 Console.WriteLine(ex.Message); 
-            } 
-            // DA FINIRE DI COMPILARE
+            }
+            Console.ReadLine();
         }
     }
 }

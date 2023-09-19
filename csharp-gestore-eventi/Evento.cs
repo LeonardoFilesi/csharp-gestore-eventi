@@ -23,7 +23,7 @@ namespace csharp_gestore_eventi
             {
                 if (string.IsNullOrWhiteSpace(value))   // Value: valore scritto dall'utente
                 {
-                    throw new Exception("Deve esserci un titolo");
+                    throw new ArgumentException("Deve esserci un titolo");
                 }
                 this._titolo = value;
             }
@@ -110,7 +110,4 @@ namespace csharp_gestore_eventi
             }
         }
     }
-        
-    }
-
 }
